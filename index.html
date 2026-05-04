@@ -1,0 +1,1060 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>WOLF LABS | The Countryside Retreat (A1)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <!-- Fonts: Lora (Elegant Serif), Nunito (Body) & Caveat (Handwriting) -->
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Lora:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        /* === THE COUNTRYSIDE RETREAT (COTTAGECORE THEME) === */
+        :root {
+            --bg-paper: #F4F1EA;       /* Warm off-white/beige */
+            --bg-card: #FFFFFF;        /* Pure white for cards */
+            --accent-sage: #7C9082;    /* Calming Sage Green */
+            --accent-terra: #C87A5D;   /* Terracotta / Warm Clay */
+            --accent-sun: #EAB251;     /* Morning Sun Yellow */
+            --text-main: #2C3A2E;      /* Deep Forest Green (Almost Black) */
+            --text-muted: #7A8B7D;     /* Muted Green/Gray */
+            --shadow-soft: rgba(44, 58, 46, 0.08); /* Soft forest shadow */
+        }
+
+        body { 
+            font-family: 'Nunito', sans-serif; 
+            background-color: var(--bg-paper);
+            color: var(--text-main);
+            overflow: hidden;
+            -webkit-tap-highlight-color: transparent;
+            /* Paper texture overlay */
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
+        }
+
+        h1, h2, h3, .font-title { font-family: 'Lora', serif; }
+        .font-handwriting { font-family: 'Caveat', cursive; font-size: 1.25em; }
+
+        /* HUD TOP */
+        #hud-top {
+            position: fixed; top: 0; left: 0; right: 0; padding: 20px 40px;
+            background: rgba(244, 241, 234, 0.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(124, 144, 130, 0.2);
+            z-index: 1000;
+        }
+
+        .hud-bar-container { width: 120px; height: 8px; background: rgba(0,0,0,0.05); border-radius: 12px; overflow: hidden; box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);}
+        .hud-bar-fill { height: 100%; transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1); border-radius: 12px; }
+
+        /* CONTENT ARENA */
+        #mission-arena { height: 100vh; padding-bottom: 120px; }
+
+        /* NATURE CARDS */
+        .nature-card {
+            background-color: var(--bg-card);
+            border-radius: 24px;
+            padding: 3rem;
+            box-shadow: 0 20px 40px var(--shadow-soft), 0 1px 3px rgba(0,0,0,0.02);
+            position: relative;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(124, 144, 130, 0.1);
+        }
+
+        /* FOLLOW UP BOXES */
+        .follow-up-box {
+            background-color: #FAFAF7;
+            border-radius: 16px;
+            box-shadow: inset 0 2px 10px rgba(0,0,0,0.02);
+            border: 1px solid rgba(124, 144, 130, 0.15);
+        }
+
+        /* BUTTONS */
+        .btn-sage {
+            background: var(--accent-sage); color: white; border-radius: 50px;
+            font-family: 'Nunito', sans-serif; font-weight: 800; text-transform: uppercase;
+            letter-spacing: 0.1em; transition: all 0.3s ease; border: none; cursor: pointer;
+            box-shadow: 0 8px 20px rgba(124, 144, 130, 0.3);
+        }
+        .btn-sage:hover { transform: translateY(-3px); box-shadow: 0 12px 25px rgba(124, 144, 130, 0.4); background: #6B7C70; }
+        .btn-sage:active { transform: scale(0.96); }
+
+        .btn-terra {
+            background: var(--accent-terra); color: white; border-radius: 50px;
+            font-family: 'Nunito', sans-serif; font-weight: 800; text-transform: uppercase;
+            letter-spacing: 0.1em; transition: all 0.3s ease; border: none; cursor: pointer;
+            box-shadow: 0 8px 20px rgba(200, 122, 93, 0.3);
+        }
+        .btn-terra:hover { transform: translateY(-3px); box-shadow: 0 12px 25px rgba(200, 122, 93, 0.4); background: #B3684D; }
+        .btn-terra:active { transform: scale(0.96); }
+
+        .btn-outline {
+            background: transparent; border: 2px solid var(--accent-sage); color: var(--accent-sage); border-radius: 50px;
+            font-family: 'Nunito', sans-serif; font-weight: 800; text-transform: uppercase;
+            letter-spacing: 0.1em; transition: all 0.3s ease; cursor: pointer;
+        }
+        .btn-outline:hover { background: rgba(124, 144, 130, 0.1); transform: translateY(-2px); }
+
+        /* SLIDER */
+        input[type=range].cute-slider { -webkit-appearance: none; width: 100%; background: transparent; }
+        input[type=range].cute-slider:focus { outline: none; }
+        input[type=range].cute-slider::-webkit-slider-runnable-track { width: 100%; height: 10px; cursor: pointer; background: rgba(124, 144, 130, 0.2); border-radius: 10px; }
+        input[type=range].cute-slider::-webkit-slider-thumb { -webkit-appearance: none; height: 36px; width: 36px; border-radius: 50%; background: var(--accent-terra); cursor: pointer; margin-top: -13px; box-shadow: 0 4px 15px rgba(200, 122, 93, 0.4); border: 4px solid white; transition: transform 0.2s; }
+        input[type=range].cute-slider::-webkit-slider-thumb:hover { transform: scale(1.2); }
+
+        /* BOTANICAL CARDS (Flip Cards for Vocab) */
+        .botanical-card { perspective: 1000px; cursor: pointer; }
+        .botanical-card-inner { position: relative; width: 100%; height: 100%; text-align: center; transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1); transform-style: preserve-3d; }
+        .botanical-card.flipped .botanical-card-inner { transform: rotateY(180deg); }
+        .botanical-card-front, .botanical-card-back {
+            position: absolute; width: 100%; height: 100%; backface-visibility: hidden;
+            display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 1.5rem;
+            background-color: var(--bg-card); border-radius: 20px; box-shadow: 0 15px 35px var(--shadow-soft); border: 1px solid rgba(124, 144, 130, 0.15);
+        }
+        .botanical-card-front { padding-bottom: 2rem; background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M20 20.5V18H0v-2h20v-2H0v-2h20v-2H0V8h20V6H0V4h20V2H0V0h22v20h2V0h2v20h2V0h2v20h2V0h2v20h2V0h2v20h2v2H20v-1.5zM0 20h2v20H0V20zm4 0h2v20H4V20zm4 0h2v20H8V20zm4 0h2v20h-2V20zm4 0h2v20h-2V20zm4 4h20v2H20v-2zm0 4h20v2H20v-2zm0 4h20v2H20v-2zm0 4h20v2H20v-2z' fill='%237C9082' fill-opacity='0.03' fill-rule='evenodd'/%3E%3C/svg%3E"); }
+        .botanical-card-front .icon-box { width: 90px; height: 90px; background: #F4F6F4; border-radius: 50%; margin-bottom: 1.5rem; display: flex; align-items: center; justify-content: center; font-size: 3rem; border: 2px dashed rgba(124, 144, 130, 0.3); color: var(--accent-sage);}
+        .botanical-card-back { background: var(--accent-sage); color: white; transform: rotateY(180deg); }
+
+        /* MCQ ROWS */
+        .mcq-row {
+            background: var(--bg-card); border: 2px solid transparent; border-radius: 16px; transition: all 0.2s ease;
+            cursor: pointer; display: flex; align-items: center; padding: 1.2rem 1.5rem; box-shadow: 0 4px 15px var(--shadow-soft);
+        }
+        .mcq-row:hover:not(.locked-check) { border-color: var(--accent-terra); transform: translateX(8px); }
+        .mcq-row.correct { background: #FFF9F7; border-color: var(--accent-terra); color: var(--accent-terra); }
+        .mcq-row.wrong { background: #F1F5F9; border-color: #CBD5E1; color: #94A3B8; }
+
+        /* THE TUNER (Magic Switch) */
+        .tuner-checkbox:checked + .tuner-label { background-color: var(--accent-sage); border-color: var(--accent-sage); }
+        .tuner-checkbox:checked + .tuner-label .tuner-knob { transform: translateX(100%); background-color: white; }
+        .tuner-checkbox:not(:checked) + .tuner-label { background-color: #E2E8E4; border-color: #CBD5E1; }
+        .tuner-checkbox:not(:checked) + .tuner-label .tuner-knob { background-color: white; }
+
+        /* THE FIXER */
+        .bug-word { color: var(--accent-terra); border-bottom: 3px dotted var(--accent-terra); cursor: pointer; font-weight: bold; transition: all 0.2s; padding: 0 6px; border-radius: 6px; }
+        .bug-word:hover { background: rgba(200, 122, 93, 0.1); }
+        .bug-fixed { color: var(--accent-sage); pointer-events: none; font-weight: bold; border-bottom: 3px solid var(--accent-sage); background: transparent; }
+
+        /* WORD BUILDER */
+        .wb-pill { background-color: var(--bg-card); padding: 12px 24px; border-radius: 12px; font-weight: 700; cursor: pointer; transition: all 0.2s; display: inline-block; border: 2px solid rgba(124, 144, 130, 0.2); box-shadow: 0 4px 10px var(--shadow-soft); color: var(--text-main);}
+        .wb-pill:hover { background-color: var(--accent-sage); color: white; transform: translateY(-4px); border-color: var(--accent-sage); }
+        .wb-pill.used { opacity: 0; pointer-events: none; transform: scale(0.5); }
+        .wb-dropzone { min-height: 80px; border-bottom: 3px dashed rgba(124, 144, 130, 0.3); display: flex; flex-wrap: wrap; gap: 12px; align-items: center; justify-content: center; padding: 15px; width: 100%; max-width: 800px; margin: 0 auto;}
+        .pill-in-zone { background-color: var(--accent-sage); color: white; padding: 12px 24px; border-radius: 12px; font-weight: 700; cursor: default; animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); box-shadow: 0 6px 15px rgba(124, 144, 130, 0.3);}
+
+        /* CHAT SIMULATOR */
+        .chat-container { background: #FAFAF7; border-radius: 24px; border: 8px solid white; overflow: hidden; box-shadow: 0 15px 35px var(--shadow-soft); }
+        .chat-bubble-left { background: white; color: var(--text-main); padding: 1rem 1.2rem; border-radius: 1.5rem 1.5rem 1.5rem 0.2rem; align-self: flex-start; max-width: 80%; margin-bottom: 1rem; font-weight: 600; box-shadow: 0 2px 8px rgba(0,0,0,0.02);}
+        .chat-bubble-right { background: #E8ECD7; color: var(--text-main); padding: 1rem 1.2rem; border-radius: 1.5rem 1.5rem 0.2rem 1.5rem; align-self: flex-end; max-width: 80%; margin-bottom: 1rem; font-weight: 600; box-shadow: 0 2px 8px rgba(0,0,0,0.02);}
+
+        /* SPEAKING STARTERS */
+        .starter-content { max-height: 0; overflow: hidden; transition: max-height 0.4s ease-out; opacity: 0; }
+        .starter-content.open { max-height: 300px; opacity: 1; margin-top: 1.5rem; }
+
+        /* FOOTER CONSOLE */
+        #nav-console {
+            position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); width: calc(100% - 48px); max-width: 900px;
+            background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(20px); border: 1px solid rgba(124, 144, 130, 0.2); border-radius: 100px;
+            padding: 12px 30px; z-index: 5000; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 15px 40px var(--shadow-soft);
+        }
+
+        /* DRAWERS */
+        .drawer { background: #FAFAF7; color: var(--text-main); border-left: 1px solid rgba(124, 144, 130, 0.2); transform: translateX(100%); transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1); z-index: 5100; box-shadow: -20px 0 50px rgba(0,0,0,0.1);}
+        .drawer.active { transform: translateX(0); }
+
+        .fade-in { animation: fadeIn 0.5s ease forwards; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes popIn { 0% { transform: scale(0.8); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
+
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-thumb { background: rgba(124, 144, 130, 0.3); border-radius: 10px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+
+        /* EFFECTS */
+        #confetti-canvas { position: fixed; inset: 0; pointer-events: none; z-index: 9999; }
+        .shake { animation: shake 0.4s cubic-bezier(.36,.07,.19,.97) both; }
+        @keyframes shake { 10%, 90% { transform: translate3d(-2px, 0, 0); } 20%, 80% { transform: translate3d(3px, 0, 0); } 30%, 50%, 70% { transform: translate3d(-5px, 0, 0); } 40%, 60% { transform: translate3d(5px, 0, 0); } }
+    </style>
+</head>
+<body class="flex flex-col h-screen overflow-hidden text-base">
+
+    <canvas id="confetti-canvas"></canvas>
+
+    <!-- HUD SUPERIOR -->
+    <div id="hud-top" class="hidden justify-between items-center w-full">
+        <div class="flex items-center gap-10">
+            <div class="flex flex-col gap-1">
+                <span class="text-[10px] font-bold text-gray-500 uppercase tracking-widest">Energy (HP)</span>
+                <div class="hud-bar-container"><div id="hp-bar" class="hud-bar-fill bg-[var(--accent-terra)]" style="width: 100%;"></div></div>
+            </div>
+            <div class="flex flex-col gap-1">
+                <span class="text-[10px] font-bold text-gray-500 uppercase tracking-widest">Growth (XP)</span>
+                <div class="hud-bar-container"><div id="xp-bar" class="hud-bar-fill bg-[var(--accent-sage)]" style="width: 0%;"></div></div>
+            </div>
+        </div>
+        <div class="text-right flex items-center gap-6">
+            <button onclick="toggleTeacherHUD()" class="px-5 py-2 bg-white border border-gray-200 rounded-full text-[10px] uppercase tracking-widest text-[var(--accent-sage)] hover:bg-gray-50 transition-all font-bold shadow-sm"><i class="fas fa-leaf mr-2"></i>Teacher</button>
+            <div>
+                <p class="font-title text-xl font-black text-[var(--text-main)] tracking-wide leading-none uppercase">WOLF LABS</p>
+                <p class="text-[9px] font-bold text-[var(--accent-terra)] tracking-[0.3em] uppercase mt-1">Level A1 Nature</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- PAINEL PRINCIPAL (CAPA) -->
+    <main id="dashboard" class="flex flex-col items-center relative px-8 pt-16 pb-48 z-10 w-full h-screen overflow-y-auto">
+        <button onclick="toggleFullscreen()" class="absolute top-6 right-8 text-gray-400 hover:text-gray-700 text-2xl z-50" title="Fullscreen"><i class="fas fa-expand"></i></button>
+        <div class="max-w-5xl w-full flex flex-col items-center text-center space-y-8 animate-in fade-in my-auto pb-10">
+            
+            <div class="nature-card p-6 border-t-4 border-[var(--accent-sage)] mb-6 mt-10">
+                <div class="w-32 h-32 bg-[#E8ECD7] rounded-full flex items-center justify-center overflow-hidden border-2 border-white shadow-inner">
+                    <i class="fas fa-tree text-6xl text-[var(--accent-sage)]"></i>
+                </div>
+            </div>
+
+            <div class="space-y-4">
+                <p class="text-[var(--accent-sage)] font-bold text-xs tracking-[0.4em] uppercase bg-white px-5 py-2 rounded-full inline-block shadow-sm border border-gray-100">Comprehensible Input</p>
+                <h1 class="text-6xl md:text-8xl font-black text-[var(--text-main)] leading-none tracking-tight font-title uppercase">THE COUNTRYSIDE <br> <span class="text-[var(--accent-terra)] italic font-title">RETREAT</span></h1>
+                <p class="text-xl text-[var(--text-muted)] font-medium mt-6 max-w-2xl mx-auto">Escape the city, review daily routines, and learn how to describe actions happening right now.</p>
+            </div>
+            
+            <div class="flex flex-wrap justify-center gap-3 mt-4">
+                <span class="px-4 py-1.5 bg-white border border-gray-200 text-[10px] font-bold uppercase tracking-widest text-gray-500 rounded-full shadow-sm">Farm & Food Vocab</span>
+                <span class="px-4 py-1.5 bg-[var(--accent-sage)]/10 border border-[var(--accent-sage)]/20 text-[10px] font-bold uppercase tracking-widest text-[var(--accent-sage)] rounded-full">Present Continuous</span>
+                <span class="px-4 py-1.5 bg-[var(--accent-terra)]/10 border border-[var(--accent-terra)]/20 text-[10px] font-bold uppercase tracking-widest text-[var(--accent-terra)] rounded-full">Am / Is / Are + ING</span>
+            </div>
+            
+            <button onclick="startMission()" class="mt-10 btn-sage px-16 py-5 text-lg mb-10">
+                Start Journey
+            </button>
+        </div>
+    </main>
+
+    <!-- ARENA DE CONTEÚDO DA LIÇÃO -->
+    <main id="mission-arena" class="hidden flex-grow flex-col overflow-hidden relative mt-16">
+        <div id="mission-content" class="flex-grow overflow-y-auto px-6 py-12 flex flex-col items-center w-full"></div>
+    </main>
+
+    <!-- CONSOLA DE NAVEGAÇÃO -->
+    <footer id="nav-console" class="hidden flex justify-between items-center w-full">
+        <div class="flex items-center gap-6 w-1/4">
+            <button onclick="goHome()" class="text-gray-400 hover:text-[var(--accent-terra)] transition-colors"><i class="fas fa-power-off text-xl"></i></button>
+            <div class="flex flex-col">
+                <span id="console-title" class="text-[12px] font-black text-[var(--text-main)] uppercase tracking-widest truncate font-title">A1</span>
+                <span id="console-type" class="text-[9px] font-bold text-[var(--accent-sage)] uppercase tracking-widest">Nature</span>
+            </div>
+        </div>
+        <div class="flex flex-col items-center gap-4 w-1/2">
+            <div class="flex items-center gap-12">
+                <button onclick="prevStep()" class="text-gray-400 hover:text-gray-700 transition-colors"><i class="fas fa-chevron-left text-2xl"></i></button>
+                <span id="console-counter" class="text-[10px] font-bold text-gray-400 tracking-[0.4em] uppercase">PAGE 01</span>
+                <button onclick="nextStep()" class="text-gray-400 hover:text-[var(--accent-sage)] hover:scale-110 transition-all"><i class="fas fa-chevron-right text-2xl"></i></button>
+            </div>
+            <div class="w-64 h-1.5 bg-gray-200 rounded-full overflow-hidden border border-gray-300">
+                <div id="progress-bar" class="h-full bg-[var(--accent-sage)] transition-all duration-300" style="width: 0%;"></div>
+            </div>
+        </div>
+        <div class="flex items-center justify-end gap-6 w-1/4">
+            <button onclick="toggleWhiteboard()" class="text-gray-400 hover:text-[var(--accent-sage)] transition-colors" title="Journal"><i class="fas fa-book-open text-xl"></i></button>
+            <button onclick="toggleFullscreen()" class="text-gray-400 hover:text-gray-700 transition-colors" title="Fullscreen"><i class="fas fa-expand text-xl"></i></button>
+            <button onclick="toggleLessonNavigator()" class="text-gray-400 hover:text-[var(--accent-sage)] transition-colors" title="Index"><i class="fas fa-list-ul text-xl"></i></button>
+        </div>
+    </footer>
+
+    <!-- GAVETAS LATERAIS (DRAWERS) -->
+    <aside id="whiteboard" class="fixed right-0 top-0 h-screen w-[450px] drawer flex flex-col pt-24 z-[5100]">
+        <div class="p-8 border-b border-gray-200 flex justify-between items-center bg-white">
+            <h2 class="font-title text-2xl font-black text-[var(--text-main)] tracking-tight"><i class="fas fa-seedling text-[var(--accent-sage)] mr-3"></i>Nature Journal</h2>
+            <button onclick="toggleWhiteboard()" class="text-gray-400 hover:text-gray-700"><i class="fas fa-times text-xl"></i></button>
+        </div>
+        <div class="p-4 bg-gray-50 flex flex-wrap gap-2 border-b border-gray-200">
+            <button onclick="insertTag('[VOCAB]')" class="text-[10px] bg-white border border-gray-300 text-gray-600 px-3 py-1.5 rounded-full hover:bg-[var(--accent-terra)] hover:text-white transition-all font-bold uppercase tracking-widest shadow-sm">Vocab</button>
+            <button onclick="insertTag('[GRAMMAR]')" class="text-[10px] bg-white border border-gray-300 text-gray-600 px-3 py-1.5 rounded-full hover:bg-[var(--accent-sage)] hover:text-white transition-all font-bold uppercase tracking-widest shadow-sm">Grammar</button>
+        </div>
+        <textarea id="wb-text" class="flex-grow bg-[#FAFAFA] text-[var(--text-main)] p-8 resize-none focus:outline-none font-handwriting text-2xl leading-relaxed" placeholder="Write your notes here..."></textarea>
+    </aside>
+
+    <aside id="lesson-navigator" class="fixed right-0 top-0 h-screen w-80 drawer flex flex-col pt-24 z-[5100]">
+        <div class="p-8 border-b border-gray-200 text-[var(--text-main)] font-bold uppercase tracking-widest flex justify-between items-center text-sm bg-white">Index <button onclick="toggleLessonNavigator()"><i class="fas fa-times text-gray-400 hover:text-gray-700"></i></button></div>
+        <div id="nav-steps-list" class="flex-grow overflow-y-auto p-4 space-y-2 bg-[#FAFAF7]"></div>
+    </aside>
+
+    <aside id="teacher-hud" class="fixed right-0 top-0 h-screen w-[350px] drawer flex flex-col pt-24 z-[5100]">
+        <div class="p-8 border-b border-gray-200 flex justify-between items-center bg-white">
+            <h2 class="font-title text-2xl font-black text-[var(--accent-sage)] tracking-tight uppercase"><i class="fas fa-leaf mr-2"></i> Teacher</h2>
+            <button onclick="toggleTeacherHUD()"><i class="fas fa-times text-xl text-gray-400 hover:text-gray-700"></i></button>
+        </div>
+        <div class="flex-grow overflow-y-auto p-8 space-y-8 bg-[#FAFAF7]">
+            <div class="bg-[var(--accent-sage)]/10 p-6 rounded-2xl border border-[var(--accent-sage)]/20 shadow-sm">
+                <p class="text-[10px] font-bold text-[var(--accent-sage)] uppercase tracking-widest mb-3">Module Goal</p>
+                <p class="text-sm text-[var(--text-muted)] leading-relaxed">Level A1. Comprehensible Input video. Learn Farm & Food vocabulary. Master the Present Continuous (I am doing) to describe actions happening right now.</p>
+            </div>
+            <div>
+                <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-4">Send Praise</p>
+                <div class="space-y-3">
+                    <button onclick="triggerPraise('BEAUTIFUL', 'Great speaking.')" class="w-full py-4 bg-white text-[var(--accent-sage)] border border-[var(--accent-sage)]/30 rounded-xl font-bold text-xs hover:bg-[var(--accent-sage)] hover:text-white transition-all tracking-widest shadow-sm">SEND: SAGE (GOOD)</button>
+                    <button onclick="triggerPraise('AMAZING', 'Perfect grammar.')" class="w-full py-4 bg-white text-[var(--accent-terra)] border border-[var(--accent-terra)]/30 rounded-xl font-bold text-xs hover:bg-[var(--accent-terra)] hover:text-white transition-all tracking-widest shadow-sm">SEND: TERRA (GREAT)</button>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Overlay de Elogio -->
+    <div id="praise-overlay" class="fixed inset-0 z-[6000] flex items-center justify-center bg-black/60 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-300 p-4">
+        <div id="praise-card" class="nature-card p-16 rounded-[3rem] text-center transform scale-50 transition-transform duration-500 border-4">
+            <h2 id="praise-main" class="font-title text-6xl md:text-8xl font-black tracking-tighter uppercase mb-4 drop-shadow-md"></h2>
+            <p id="praise-sub" class="text-xl font-bold tracking-widest uppercase mt-6 opacity-80 text-[var(--text-muted)]"></p>
+        </div>
+    </div>
+
+    <!-- SCRIPT DO MOTOR PRINCIPAL -->
+    <script>
+        // --- ESTADO DO SISTEMA ---
+        let state = { hp: 100, xp: 0, current: 0 };
+        const esc = (s) => s ? s.replace(/'/g, "\\'").replace(/"/g, "&quot;") : "";
+        
+        const TYPES = { COVER: "Intro", WARMUP: "Warm Up", VIDEO: "Cinema", VOCAB: "Botany", GRAMMAR: "Roots", DRILL: "Practice", TUNER: "Shift", BUILDER: "Harvest", READER: "Journal", SPEAKING: "Voice", WRAP: "End" };
+
+        function step(type, title, html) { return { type, title, html }; }
+
+        function updateHUD() {
+            const h = document.getElementById('hp-bar'); if(h) h.style.width = Math.max(0, state.hp) + '%';
+            // XP Max is scaled for 27 pages
+            const x = document.getElementById('xp-bar'); if(x) x.style.width = Math.min(100, (state.xp / 65) * 100) + '%';
+        }
+
+        function insertTag(tag) { 
+            const text = document.getElementById('wb-text'); 
+            if (text) { text.value += (text.value.length > 0 ? '\n' : '') + tag + ' '; text.focus(); } 
+        }
+
+        // --- TEMPLATES TEMÁTICOS (COTTAGECORE) ---
+        
+        const bGuide = (title, points) => step(TYPES.COVER, title, `
+            <div class="max-w-4xl mx-auto space-y-10 animate-in fade-in py-10">
+                <div class="nature-card border-t-8 border-[var(--accent-sage)]">
+                    <p class="text-[var(--accent-sage)] font-bold uppercase tracking-[0.4em] text-[10px] mb-6 flex items-center gap-3">
+                        <i class="fas fa-map text-lg"></i> WOLF LABS | Map Guide
+                    </p>
+                    <h2 class="font-title text-4xl md:text-5xl font-black text-[var(--text-main)] tracking-tight leading-none mb-10 pb-8 border-b border-gray-100 uppercase">${title}</h2>
+                    <div class="space-y-6">
+                        ${points.map(p => `<p class="text-xl text-[var(--text-muted)] font-medium leading-relaxed flex items-start gap-4"><i class="fas fa-leaf text-[var(--accent-terra)] text-[16px] mt-1.5 opacity-80"></i> ${p}</p>`).join('')}
+                    </div>
+                </div>
+            </div>
+        `);
+
+        const bSlider = (title, prompt, optA, optB, starter) => step(TYPES.WARMUP, title, `
+            <div class="max-w-4xl mx-auto flex flex-col items-center justify-center min-h-[60vh] text-center space-y-12 animate-in fade-in">
+                <p class="text-[10px] font-bold text-[var(--accent-terra)] uppercase tracking-[0.4em] mb-2 bg-white px-5 py-2 rounded-full border border-gray-200 shadow-sm">Lifestyle Check</p>
+                <h2 class="font-title text-4xl md:text-5xl font-black text-[var(--text-main)] tracking-tight leading-tight">${prompt}</h2>
+                
+                <div class="w-full max-w-3xl nature-card py-16 flex flex-col items-center mt-8">
+                    <div class="flex justify-between w-full px-8 mb-12 text-5xl">
+                        <span class="opacity-80 hover:opacity-100 hover:text-[var(--accent-sage)] transition-all hover:scale-110 drop-shadow-sm" title="Farm"><i class="fas fa-tractor text-[var(--accent-sage)]"></i></span>
+                        <span class="opacity-80 hover:opacity-100 hover:text-gray-600 transition-all hover:scale-110 drop-shadow-sm" title="City"><i class="fas fa-city text-gray-500"></i></span>
+                    </div>
+                    <div class="w-full px-12 relative">
+                        <input type="range" min="0" max="100" value="50" class="cute-slider">
+                    </div>
+                    <div class="flex justify-between w-full px-8 mt-12 text-xs font-bold text-gray-400 uppercase tracking-widest">
+                        <span class="text-[var(--accent-sage)]">${optA}</span>
+                        <span class="text-gray-500">${optB}</span>
+                    </div>
+                </div>
+
+                <div class="follow-up-box w-full max-w-3xl p-8 mt-8 text-left border-l-4 border-[var(--accent-terra)]">
+                    <p class="text-[10px] font-bold text-[var(--accent-terra)] uppercase tracking-widest mb-4">Conversation</p>
+                    <p class="text-xl font-bold text-[var(--text-main)] mb-2">Where do you prefer to live?</p>
+                    <p class="text-2xl font-bold text-gray-500 mt-4 font-handwriting">"${starter}"</p>
+                </div>
+            </div>
+        `);
+
+        // Bridge Review (MCQ Style)
+        const bMCQ = (id, title, prompt, options, correctIdx, followup, starter) => step(TYPES.DRILL, title, `
+            <div class="max-w-4xl mx-auto flex flex-col items-center justify-center min-h-[60vh] text-center space-y-10 animate-in fade-in">
+                <p class="text-[10px] font-bold text-[var(--accent-sage)] uppercase tracking-[0.4em] mb-2 bg-white px-5 py-2 rounded-full border border-gray-200 shadow-sm">Observation</p>
+                <h2 class="font-title text-4xl md:text-5xl font-black text-[var(--text-main)] tracking-tight leading-tight">${prompt}</h2>
+                
+                <div class="w-full max-w-2xl space-y-4 mt-8" id="quiz-options-${id}">
+                    ${options.map((opt, i) => `
+                        <div class="mcq-row locked-check" onclick="handleQuizTrial('${id}', this, ${i === correctIdx}, '${esc(followup)}', '${esc(starter)}')">
+                            <div class="w-12 h-12 rounded-full border border-gray-200 bg-gray-50 flex items-center justify-center text-lg font-bold text-gray-400 mr-5">${String.fromCharCode(65 + i)}</div>
+                            <span class="text-xl font-bold text-[var(--text-main)] text-left">${opt}</span>
+                        </div>
+                    `).join('')}
+                </div>
+
+                <div id="followup-box-${id}" class="follow-up-box hidden w-full max-w-2xl p-8 mt-8 text-left border-l-4 border-[var(--accent-sage)]">
+                    <p class="text-[10px] font-bold text-[var(--accent-sage)] uppercase tracking-widest mb-4">Your Turn</p>
+                    <p class="text-xl font-bold text-[var(--text-main)] mb-4">${followup}</p>
+                    ${starter ? `<p class="text-2xl font-bold text-[var(--text-muted)] font-handwriting">"${starter}"</p>` : ''}
+                </div>
+            </div>
+        `);
+
+        // Video Component (Surgical Cuts)
+        const bVideo = (title, videoId, instruction, start=0, end=0) => {
+            let timeStr = `?start=${start}`;
+            if(end > 0) timeStr += `&end=${end}`;
+            return step(TYPES.VIDEO, title, `
+            <div class="max-w-5xl mx-auto w-full flex flex-col items-center py-10 animate-in fade-in">
+                <p class="text-[10px] font-bold text-white uppercase tracking-[0.4em] mb-6 border border-[var(--accent-terra)]/30 px-5 py-2 rounded-full bg-[var(--accent-terra)] shadow-sm"><i class="fab fa-youtube mr-2"></i> Cinema Mode</p>
+                <h2 class="font-title text-4xl md:text-5xl font-black text-[var(--text-main)] tracking-tight mb-8 text-center">${title}</h2>
+                <p class="text-[var(--text-muted)] text-xl font-bold mb-12 text-center max-w-2xl">${instruction}</p>
+                
+                <div class="w-full nature-card p-4 md:p-8 flex flex-col items-center shadow-lg">
+                    <div class="w-full aspect-video bg-black border border-gray-200 shadow-xl relative overflow-hidden rounded-2xl">
+                        <iframe class="absolute inset-0 w-full h-full" src="https://www.youtube.com/embed/${videoId}${timeStr}&rel=0" frameborder="0" allowfullscreen></iframe>
+                    </div>
+                </div>
+            </div>
+            `);
+        };
+
+        // Nature Vocab (Flip Cards)
+        function bNatureCards(title, words) {
+            const nodesHtml = words.map((w, i) => {
+                const rotation = (i % 2 === 0) ? '-rotate-2' : 'rotate-2';
+                return `
+                <div class="botanical-card w-64 h-[300px] ${rotation}" onclick="this.classList.toggle('flipped')">
+                    <div class="botanical-card-inner">
+                        <div class="botanical-card-front">
+                            <div class="icon-box">
+                                <i class="${w.icon}"></i>
+                            </div>
+                            <span class="font-title font-black text-[var(--text-main)] text-3xl mt-2 capitalize tracking-wide">${w.word}</span>
+                            <span class="text-[10px] text-[var(--text-muted)] mt-auto tracking-widest uppercase border border-gray-200 px-4 py-1.5 rounded-full bg-white"><i class="fas fa-sync-alt mr-2"></i> Flip</span>
+                        </div>
+                        <div class="botanical-card-back">
+                            <p class="text-white text-[10px] font-bold uppercase tracking-widest mb-6 border-b border-white/30 pb-2 w-full text-center">Meaning / Concept</p>
+                            
+                            <div class="w-full h-full flex flex-col justify-center items-center bg-white/10 p-5 rounded-xl border border-white/20">
+                                <p class="text-white text-2xl font-bold mb-4 leading-tight font-title">${w.translation}</p>
+                                <p class="text-white/80 text-xl font-handwriting mt-2">"${w.example}"</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `}).join('');
+
+            return step(TYPES.VOCAB, title, `
+                <div class="max-w-6xl mx-auto flex flex-col items-center py-10 animate-in fade-in">
+                    <div class="text-center mb-16">
+                        <p class="text-[10px] font-bold text-gray-500 uppercase tracking-[0.4em] mb-4 bg-white inline-block px-5 py-2 rounded-full border border-gray-200 shadow-sm"><i class="fas fa-leaf text-[var(--accent-sage)] mr-2"></i> Field Notes</p>
+                        <h2 class="font-title text-5xl font-black text-[var(--text-main)] tracking-tight">${title}</h2>
+                    </div>
+                    <div class="flex flex-wrap justify-center gap-10">
+                        ${nodesHtml}
+                    </div>
+                </div>
+            `);
+        }
+
+        const bGrammar = (title, rule, examples, tagColor="var(--accent-sage)") => step(TYPES.GRAMMAR, title, `
+            <div class="max-w-5xl mx-auto space-y-10 animate-in fade-in py-10">
+                <div class="text-center space-y-4 mb-16">
+                    <p class="text-[10px] font-bold text-white uppercase tracking-[0.5em] mb-4 inline-block px-5 py-2 rounded-full shadow-sm" style="background-color: ${tagColor}">Grammar Root</p>
+                    <h2 class="font-title text-5xl md:text-6xl font-black text-[var(--text-main)] tracking-tight">${title}</h2>
+                </div>
+                <div class="nature-card mb-12 border-l-8" style="border-left-color: ${tagColor}">
+                    <p class="text-2xl text-[var(--text-main)] font-medium leading-relaxed">${rule.replace(/\[(.*?)\]/g, `<span style="color: ${tagColor}" class="font-black">$1</span>`)}</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+                    ${examples.map(ex => `
+                        <div class="bg-white border border-gray-200 p-10 rounded-[2rem] shadow-sm text-center hover:shadow-md transition-shadow">
+                            <p class="text-[10px] font-bold uppercase text-gray-400 tracking-widest mb-6">${ex.context}</p>
+                            <p class="text-3xl font-black text-[var(--text-main)] leading-tight font-title">"${ex.text.replace(/\[(.*?)\]/g, `<span style="color: ${tagColor}">$1</span>`)}"</p>
+                        </div>
+                    `).join('')}
+                </div>
+            </div>
+        `);
+
+        const bTuner = (id, title, instruction, textAff, textAlt, feedback, tagColor="var(--accent-terra)") => step(TYPES.TUNER, title, `
+            <div class="max-w-4xl mx-auto flex flex-col items-center justify-center min-h-[60vh] text-center space-y-12 animate-in fade-in">
+                <p class="text-[10px] font-bold text-white uppercase tracking-[0.4em] mb-2 px-5 py-2 rounded-full shadow-sm" style="background-color: ${tagColor}">Magic Shift</p>
+                <h2 class="font-title text-5xl font-black text-[var(--text-main)] tracking-tight leading-tight">${title}</h2>
+                <p class="text-xl text-[var(--text-muted)] font-bold max-w-2xl">${instruction}</p>
+                
+                <div class="w-full max-w-3xl nature-card flex flex-col items-center py-16 border-t-4" style="border-top-color: ${tagColor}">
+                    <div class="flex items-center gap-8 mb-16">
+                        <span class="font-black text-[var(--text-main)] tracking-widest text-lg w-32 text-right uppercase" id="mode-aff-${id}">Routine</span>
+                        <div class="relative inline-block w-24 h-10 align-middle select-none">
+                            <input type="checkbox" id="tuner-switch-${id}" class="tuner-checkbox absolute block w-6 h-6 rounded-full opacity-0 z-10 w-full h-full cursor-pointer" onchange="toggleTuner('${id}', this, '${esc(textAff)}', '${esc(textAlt)}', '${esc(feedback)}', '${tagColor}')">
+                            <label for="tuner-switch-${id}" class="tuner-label block overflow-hidden h-10 rounded-full bg-gray-200 border border-gray-300 cursor-pointer transition-colors duration-300">
+                                <span class="tuner-knob absolute block w-8 h-8 m-1 bg-white rounded-full transition-transform duration-300 ease-in-out shadow-sm"></span>
+                            </label>
+                        </div>
+                        <span class="font-black text-gray-400 tracking-widest text-lg w-32 text-left uppercase" id="mode-alt-${id}">Right Now</span>
+                    </div>
+
+                    <div class="bg-[#FAFAFA] w-full p-10 rounded-3xl flex items-center justify-center min-h-[140px] border border-gray-200 shadow-inner">
+                        <p id="tuner-text-${id}" class="text-3xl font-black tracking-wide transition-opacity duration-300 font-title text-[var(--text-main)] leading-relaxed">${textAff.replace(/\[(.*?)\]/g, `<span style="color: ${tagColor}">$1</span>`)}</p>
+                    </div>
+                    
+                    <div id="tuner-fb-${id}" class="hidden mt-10 font-bold text-2xl font-handwriting text-gray-500">
+                        ${feedback}
+                    </div>
+                </div>
+            </div>
+        `);
+
+        function bWordBuilder(id, title, instruction, expectedArr) {
+            const expectedStr = JSON.stringify(expectedArr).replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+            let wordBtns = shuffleArray([...expectedArr]).map(w => `<span class="wb-pill text-xl" onclick="moveWbWord(this, '${esc(w)}', '${id}')">${w}</span>`).join('');
+            return step(TYPES.BUILDER, title, `
+                <div class="max-w-4xl mx-auto w-full flex flex-col items-center py-10 animate-in fade-in" data-expected="${expectedStr}" id="wb-data-${id}">
+                    <p class="text-[10px] font-bold text-[var(--accent-sage)] uppercase tracking-[0.4em] mb-4 bg-white px-5 py-2 rounded-full border border-gray-200 shadow-sm">Sentence Harvest</p>
+                    <h2 class="font-title text-4xl md:text-5xl font-black text-[var(--text-main)] tracking-tight mb-8 text-center">${title}</h2>
+                    <p class="text-[var(--text-muted)] font-bold text-xl mb-12 text-center">${instruction}</p>
+                    
+                    <div class="w-full nature-card text-center pb-12">
+                        <div class="wb-dropzone text-2xl text-[var(--text-main)]" id="wb-dropzone-${id}"></div>
+                        <div class="flex justify-center flex-wrap gap-4 mt-12" id="wb-bank-${id}">
+                            ${wordBtns}
+                        </div>
+                        <button onclick="resetWb('${id}')" class="mt-12 text-xs font-bold text-gray-400 hover:text-[var(--accent-terra)] uppercase tracking-widest transition"><i class="fas fa-undo mr-2"></i>Reset</button>
+                    </div>
+                    <div id="wb-fb-${id}" class="hidden mt-8 p-6 bg-[var(--accent-sage)] text-white font-bold font-title text-2xl rounded-full shadow-lg">Perfect harvest!</div>
+                </div>
+            `);
+        }
+
+        const bEasyReaderBoard = (id, title, instruction, readers) => {
+            const folderHtml = readers.map((r, i) => `
+                <div class="nature-card cursor-pointer hover:border-[var(--accent-sage)] hover:shadow-xl transition-all text-center group border-2 border-transparent p-8" onclick="openEasyReader('${id}', ${i})">
+                    <div class="w-16 h-16 bg-[#F4F1EA] rounded-full mx-auto flex items-center justify-center text-3xl mb-4 group-hover:scale-110 transition-transform text-[var(--accent-sage)]">
+                        <i class="${r.icon}"></i>
+                    </div>
+                    <p class="font-title font-black text-2xl text-[var(--text-main)]">${r.title}</p>
+                    <p class="text-[10px] text-gray-400 font-bold uppercase tracking-widest mt-2 border border-gray-200 bg-gray-50 px-3 py-1 rounded-full inline-block">Read Note</p>
+                </div>
+            `).join('');
+
+            const contentHtml = readers.map((r, i) => `
+                <div id="reader-content-${id}-${i}" class="hidden flex-col items-center w-full animate-in fade-in mt-10">
+                    <div class="w-full bg-white rounded-3xl border border-gray-200 p-10 text-left shadow-lg relative overflow-hidden">
+                        <div class="absolute top-0 left-0 w-2 h-full bg-[var(--accent-sage)]"></div>
+                        <p class="text-[10px] font-bold text-[var(--accent-sage)] uppercase tracking-[0.3em] mb-6">Journal Entry: ${r.title}</p>
+                        <p class="text-3xl text-gray-700 leading-relaxed font-handwriting">${r.text}</p>
+                    </div>
+                </div>
+            `).join('');
+
+            return step(TYPES.READER, title, `
+                <div class="max-w-5xl mx-auto flex flex-col items-center py-10 animate-in fade-in" id="reader-board-${id}">
+                    <p class="text-[10px] font-bold text-white uppercase tracking-[0.4em] mb-4 bg-[var(--accent-sage)] px-5 py-2 rounded-full shadow-sm"><i class="fas fa-book-open mr-2"></i> Farm Logs</p>
+                    <h2 class="font-title text-4xl md:text-5xl font-black text-[var(--text-main)] tracking-tight uppercase mb-4">${title}</h2>
+                    <p class="text-[var(--text-muted)] mb-10 text-center text-xl font-bold">${instruction}</p>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 w-full mb-4">
+                        ${folderHtml}
+                    </div>
+
+                    <div class="w-full relative min-h-[250px]">
+                        ${contentHtml}
+                    </div>
+                </div>
+            `);
+        }
+
+        const bReaderConsultQuiz = (id, title, prompt, refText, options, correctIdx) => step(TYPES.DRILL, title, `
+            <div class="max-w-4xl mx-auto flex flex-col items-center justify-center min-h-[60vh] text-center space-y-8 animate-in fade-in">
+                <p class="text-[10px] font-bold text-[var(--accent-terra)] uppercase tracking-[0.4em] mb-2 border border-gray-200 bg-white px-5 py-2 rounded-full shadow-sm">Analysis</p>
+                <h2 class="font-title text-4xl md:text-5xl font-black text-[var(--text-main)] tracking-tight leading-tight">${prompt}</h2>
+                
+                <button onclick="toggleConsultText('${id}')" class="btn-outline px-8 py-3 text-xs tracking-widest mt-4"><i class="fas fa-eye mr-2"></i> View Journal Note</button>
+
+                <div id="consult-text-${id}" class="hidden w-full max-w-2xl bg-white border-l-4 border-[var(--accent-sage)] p-8 text-left shadow-lg rounded-2xl transition-all mb-4 mt-6">
+                    <p class="text-[10px] font-bold text-[var(--accent-sage)] uppercase tracking-[0.3em] mb-4">Source Text</p>
+                    <p class="text-2xl text-gray-700 leading-relaxed font-handwriting">${refText}</p>
+                </div>
+
+                <div class="w-full max-w-2xl space-y-4 mt-8" id="quiz-options-${id}">
+                    ${options.map((opt, i) => `
+                        <div class="mcq-row locked-check" onclick="handleQuizTrial('${id}', this, ${i === correctIdx}, '', '')">
+                            <div class="w-12 h-12 rounded-full border border-gray-200 bg-gray-50 flex items-center justify-center text-sm font-bold text-gray-400 mr-6">${String.fromCharCode(65 + i)}</div>
+                            <span class="text-xl font-bold text-[var(--text-main)] text-left">${opt}</span>
+                        </div>
+                    `).join('')}
+                </div>
+            </div>
+        `);
+
+        function bFixer(title, codeLines, expectedFixes) {
+            let expectedFixesCopy = [...expectedFixes]; 
+            let htmlLines = codeLines.map((line, i) => {
+                return line.replace(/\[(.*?)\]/g, (match, word) => {
+                    const fixData = expectedFixesCopy.shift();
+                    return `<span class="bug-word" onclick="triggerFixer(this, '${esc(fixData)}')">${word}</span>`;
+                });
+            }).join('<br><br>');
+
+            return step(TYPES.DRILL, title, `
+                <div class="max-w-4xl mx-auto w-full flex flex-col items-center py-10 animate-in fade-in">
+                    <p class="text-[10px] font-bold text-white uppercase tracking-[0.4em] mb-4 bg-[var(--accent-terra)] px-5 py-2 rounded-full shadow-sm animate-pulse">Grammar Bug</p>
+                    <h2 class="font-title text-4xl md:text-5xl font-black text-[var(--text-main)] tracking-tight mb-8 text-center">${title}</h2>
+                    <p class="text-gray-500 text-xl mb-12 text-center font-bold">The recipe has grammar mistakes. Click the <span class="text-[var(--accent-terra)] bg-white px-2 py-1 rounded-md shadow-sm">terracotta words</span> to fix them.</p>
+                    
+                    <div class="w-full nature-card relative overflow-hidden text-3xl leading-relaxed text-[var(--text-main)] font-handwriting border-t-4 border-[var(--accent-terra)]">
+                        <div class="font-bold p-6">
+                            ${htmlLines}
+                        </div>
+                        
+                        <div id="fix-panel" class="absolute bottom-0 left-0 w-full bg-white border-t border-gray-200 p-8 transform translate-y-full transition-transform duration-300 flex items-center gap-6 z-20 shadow-[0_-10px_30px_rgba(0,0,0,0.05)]">
+                            <span class="text-[var(--accent-sage)] font-bold text-lg uppercase tracking-widest">Correction:</span>
+                            <input type="text" id="fix-input" class="bg-gray-50 text-[var(--text-main)] border-2 border-gray-200 rounded-xl px-6 py-4 flex-1 text-2xl focus:outline-none focus:border-[var(--accent-sage)] font-nunito font-bold" autocomplete="off" placeholder="Type here...">
+                            <button onclick="submitFixer()" class="btn-sage px-10 py-4 text-lg">Apply</button>
+                        </div>
+                    </div>
+                    <div id="fixer-hub" class="hidden mt-10 text-white font-title font-black text-2xl bg-[var(--accent-sage)] px-8 py-4 rounded-full shadow-md">Beautifully corrected!</div>
+                </div>
+            `);
+        }
+
+        const bBamboozle = (title, statement1, statement2) => step(TYPES.DRILL, title, `
+            <div class="max-w-5xl mx-auto w-full flex flex-col items-center py-10 animate-in fade-in">
+                <p class="text-[10px] font-bold text-[var(--accent-sun)] uppercase tracking-[0.4em] mb-6 border border-[var(--accent-sun)]/30 px-5 py-2 rounded-full bg-[#FFFDF5] shadow-sm">Fact or Fiction?</p>
+                <h2 class="font-title text-5xl font-black text-[var(--text-main)] tracking-tight mb-16 text-center">${title}</h2>
+                
+                <div id="bamb-q1" class="w-full max-w-4xl nature-card text-center mb-8 border-t-4 border-[var(--accent-sage)]">
+                    <p class="text-4xl font-black text-[var(--text-main)] leading-relaxed font-title mb-12">${statement1.text.replace(/\[(.*?)\]/g, '<span class="text-[var(--accent-sage)]">$1</span>')}</p>
+                    <div class="flex gap-6 justify-center">
+                        <button class="btn-sage px-12 py-5 text-lg" onclick="checkBamb(1, ${statement1.isTrue})">TRUE (YES)</button>
+                        <button class="btn-outline px-12 py-5 text-lg" onclick="checkBamb(1, ${!statement1.isTrue})">FALSE (NO)</button>
+                    </div>
+                </div>
+                
+                <div id="bamb-q2" class="hidden w-full max-w-4xl nature-card text-center mb-8 border-t-4 border-[var(--accent-terra)]">
+                    <p class="text-4xl font-black text-[var(--text-main)] leading-relaxed font-title mb-12">${statement2.text.replace(/\[(.*?)\]/g, '<span class="text-[var(--accent-terra)]">$1</span>')}</p>
+                    <div class="flex gap-6 justify-center">
+                        <button class="btn-terra px-12 py-5 text-lg" onclick="checkBamb(2, ${statement2.isTrue})">TRUE (YES)</button>
+                        <button class="btn-outline px-12 py-5 text-lg" style="border-color: var(--accent-terra); color: var(--accent-terra)" onclick="checkBamb(2, ${!statement2.isTrue})">FALSE (NO)</button>
+                    </div>
+                </div>
+                
+                <div id="bamb-fb" class="hidden mt-8 p-6 bg-[var(--accent-sun)] text-white font-black text-3xl font-title text-center rounded-full shadow-lg px-12">Good job!</div>
+            </div>
+        `);
+
+        const bChat = (title, msgs) => step(TYPES.DRILL, title, `
+            <div class="max-w-4xl mx-auto flex flex-col items-center justify-center min-h-[60vh] py-10 animate-in fade-in">
+                <p class="text-[10px] font-bold text-gray-500 uppercase tracking-[0.4em] mb-4 bg-white px-5 py-2 rounded-full border border-gray-200 shadow-sm">Reading Practice</p>
+                <h2 class="font-title text-4xl md:text-5xl font-black text-[var(--text-main)] tracking-tight mb-10 text-center">${title}</h2>
+                <div class="w-full max-w-md chat-container h-[500px] flex flex-col relative">
+                    <div class="bg-white p-4 text-center font-bold border-b border-gray-100 flex items-center justify-center gap-3 text-lg text-[var(--text-main)]">
+                        <div class="w-10 h-10 rounded-full bg-[var(--accent-sage)] flex items-center justify-center text-white shadow-sm"><i class="fas fa-user"></i></div>
+                        Jay
+                    </div>
+                    <div class="flex-1 p-6 overflow-y-auto flex flex-col bg-[#F9F6F0]">
+                        ${msgs.map(m => `<div class="${m.s === 'A' ? 'chat-bubble-right' : 'chat-bubble-left'} text-lg"><p>${m.t}</p></div>`).join('')}
+                    </div>
+                </div>
+                <p class="mt-8 text-gray-500 font-bold text-xl">Read the messages above.</p>
+            </div>
+        `);
+
+        const bRoleplay = (title, prompt, hint) => step(TYPES.SPEAKING, title, `
+            <div class="max-w-4xl mx-auto w-full flex flex-col items-center justify-center min-h-[60vh] text-center animate-in fade-in py-10 relative">
+                <div class="w-32 h-32 bg-white border border-gray-100 rounded-[2rem] flex items-center justify-center mb-8 shadow-lg rotate-3"><i class="fas fa-camera-retro text-6xl text-[var(--accent-terra)]"></i></div>
+                <p class="text-[10px] font-bold text-white uppercase tracking-[0.4em] mb-4 bg-[var(--accent-terra)] px-5 py-2 rounded-full shadow-sm">Speaking Time</p>
+                <h2 class="font-title text-5xl md:text-6xl font-black tracking-tight text-[var(--text-main)] leading-tight mb-12">${prompt}</h2>
+                
+                <div class="w-full nature-card text-left">
+                    <div class="flex justify-between items-center cursor-pointer" onclick="toggleStarter(this)">
+                        <div class="flex items-center gap-4">
+                            <i class="fas fa-lightbulb text-[var(--accent-sun)] text-3xl"></i>
+                            <span class="font-bold text-[var(--text-main)] tracking-widest uppercase text-xl">Show Hint (Click)</span>
+                        </div>
+                        <i class="fas fa-chevron-down text-gray-400"></i>
+                    </div>
+                    <div class="starter-content text-left">
+                        <div class="bg-[#FFFDF5] p-8 rounded-2xl border-l-4 border-[var(--accent-sun)] mt-6 shadow-inner">
+                            <p class="text-3xl font-bold text-gray-700 leading-relaxed font-handwriting">"${hint}"</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `);
+
+        const bWrap = () => step(TYPES.WRAP, "Retreat Complete", `
+            <div class="text-center max-w-3xl mx-auto flex flex-col items-center justify-center min-h-[60vh] animate-in fade-in">
+                <div class="w-48 h-48 rounded-[3rem] bg-[var(--accent-sage)] mx-auto flex items-center justify-center text-7xl text-white mb-12 shadow-xl border-4 border-white rotate-[-3deg]">
+                    <i class="fas fa-home"></i>
+                </div>
+                <h1 class="font-title text-6xl md:text-8xl font-black text-[var(--text-main)] tracking-tighter mb-6 uppercase">Well Done!</h1>
+                <p class="text-3xl text-[var(--text-muted)] mb-16 font-bold font-handwriting">You completed The Countryside Retreat.</p>
+                <button onclick="goHome()" class="btn-sage px-14 py-5 text-xl">Head Back to City</button>
+            </div>
+        `);
+
+        // --- LESSON DATA (26 STEPS) ---
+        const lessonData = [
+            bGuide("The Countryside Retreat", [
+                "Level: A1.", 
+                "Focus: Farm & Food Vocabulary.",
+                "Grammar: Present Continuous (I am doing).",
+                "Goal: Learn how to describe actions happening right now."
+            ]),
+            
+            bSlider("Lifestyle Check", "Where do you prefer to live?", "🚜 Farm", "🏢 City", "I prefer to live in the... because..."),
+
+            bMCQ("rev1", "Routine Review", "Before we go to the farm... What time do you wake up every day?", [
+                "I wake up at 7 o'clock.", 
+                "I am waking up at 7 o'clock.", 
+                "I wakes up at 7 o'clock."
+            ], 0, "Do you like waking up early?", "Yes, I am an early bird. / No, I am a night owl."),
+
+            bVideo("Morning Habit", "VsqkTzOVP9U", "Watch the first minute of Jay's routine on the farm.", 0, 75),
+
+            bMCQ("vid1", "Observation", "What does Jay do at 6:59 AM?", [
+                "He heads outside for a walk.", 
+                "He eats breakfast.", 
+                "He goes to sleep."
+            ], 0, "What is the first thing you do in the morning?", "The first thing I do is..."),
+
+            bNatureCards("Farm Elements", [
+                {icon: "fas fa-cow", word: "Cow", translation: "A large farm animal", example: "There is a cow on the farm."},
+                {icon: "fas fa-warehouse", word: "Barn", translation: "A house for animals", example: "The barn is red."}
+            ]),
+
+            bNatureCards("Farm Elements 2", [
+                {icon: "fas fa-bars", word: "Fence", translation: "A wooden wall", example: "The cow is behind the fence."},
+                {icon: "fas fa-leaf", word: "Grass", translation: "Green plants on the ground", example: "The cow eats grass."}
+            ]),
+
+            bVideo("The Walk", "VsqkTzOVP9U", "Watch Jay walk around the farm. He describes everything he is doing right now.", 76, 180),
+
+            bGrammar("The Present Continuous", "To talk about actions happening RIGHT NOW, we use the verb [To Be] + action with [ING].", [
+                {context: "Routine (Every day)", text: "I [walk] every morning."},
+                {context: "Right Now (At this moment)", text: "I [am walking] right now."}
+            ], "var(--accent-terra)"),
+
+            bGrammar("The 'ING' Rules", "Usually, just add [ING]. If the verb ends in 'E', drop the 'E' and add [ING].", [
+                {context: "Normal", text: "Walk -> [Walking]"},
+                {context: "Ends in E", text: "Slice -> [Slicing]"}
+            ], "var(--accent-terra)"),
+
+            bTuner("tun1", "Time Shift", "Change the sentence from Routine to Right Now.", "He [walks] in the park.", "He [is walking] in the park.", "Notice: is + walking", "var(--accent-terra)"),
+            
+            bTuner("tun2", "Time Shift II", "Change the sentence from Routine to Right Now.", "She [makes] coffee.", "She [is making] coffee.", "Notice: Drop the 'e' -> making", "var(--accent-terra)"),
+
+            bNatureCards("Breakfast Prep", [
+                {icon: "fas fa-lemon", word: "Mango", translation: "A sweet yellow fruit", example: "I love sweet mangoes."},
+                {icon: "fas fa-star", word: "Strawberry", translation: "A small red fruit", example: "The strawberry is red."}
+            ]),
+
+            bNatureCards("Breakfast Prep 2", [
+                {icon: "fas fa-seedling", word: "Oats", translation: "A healthy grain", example: "I eat oats for breakfast."},
+                {icon: "fas fa-circle-notch", word: "Bowl", translation: "A deep dish for food", example: "Put the oats in the bowl."}
+            ]),
+
+            bVideo("Making Breakfast", "VsqkTzOVP9U", "Watch Jay prepare his healthy breakfast. Listen to the 'ING' verbs!", 320, 435),
+
+            bWordBuilder("wb1", "Sentence Harvest", "Build a sentence describing what Jay is doing.", ["He", "is", "slicing", "the", "mango", "."]),
+            
+            bWordBuilder("wb2", "Sentence Harvest II", "Describe yourself right now.", ["I", "am", "learning", "English", "now", "."]),
+
+            bGrammar("Negative Actions", "To say you are NOT doing something right now, just add [NOT] after the verb To Be.", [
+                {context: "Affirmative", text: "He is sleeping."},
+                {context: "Negative", text: "He [is not] sleeping."}
+            ], "var(--text-muted)"),
+
+            bTuner("tun3", "Negative Shift", "Change the sentence to negative.", "The cow [is eating].", "The cow [isn't eating].", "Notice: isn't = is not", "var(--accent-sage)"),
+
+            bEasyReaderBoard("readers1", "Farm Logs", "Read the journal entries from the farm workers.", [
+                {
+                    title: "Morning Log",
+                    icon: "fas fa-sun",
+                    text: "It is 7:00 AM. The sun is shining. I am drinking coffee and looking at the barn. The cows are sleeping."
+                },
+                {
+                    title: "Afternoon Log",
+                    icon: "fas fa-cloud-sun",
+                    text: "It is 2:00 PM. It is boiling hot! I am resting in the shade. The dog isn't running, it is resting too."
+                },
+                {
+                    title: "Evening Log",
+                    icon: "fas fa-moon",
+                    text: "It is 8:00 PM. We are making dinner. Jay is slicing the vegetables. I am preparing the barbecue."
+                }
+            ]),
+
+            bReaderConsultQuiz("rq1", "Morning Log Analysis", "What are the cows doing at 7:00 AM?", "It is 7:00 AM. The sun is shining. I am drinking coffee and looking at the barn. The cows are sleeping.", ["Eating grass", "Sleeping", "Drinking water"], 1),
+            
+            bReaderConsultQuiz("rq2", "Afternoon Log Analysis", "Is the dog running?", "It is 2:00 PM. It is boiling hot! I am resting in the shade. The dog isn't running, it is resting too.", ["Yes, it is.", "No, it isn't.", "The dog is eating."], 1),
+            
+            bReaderConsultQuiz("rq3", "Evening Log Analysis", "What is Jay doing?", "It is 8:00 PM. We are making dinner. Jay is slicing the vegetables. I am preparing the barbecue.", ["Making a cake", "Sleeping", "Slicing vegetables"], 2),
+
+            bChat("Texting from the Farm", [
+                {s:'B', t:'Hey Jay! What are you doing?'}, 
+                {s:'A', t:'Hey! I am walking on the farm right now.'}, 
+                {s:'B', t:'Nice! Are the animals sleeping?'}, 
+                {s:'A', t:'No, they aren\'t. The cows are eating grass.'}, 
+                {s:'B', t:'Sounds peaceful. Are you making breakfast?'}, 
+                {s:'A', t:'Yes, I am slicing some mangoes.'}
+            ]),
+
+            bFixer("Recipe Bugs", [
+                "Good morning!", 
+                "Right now, I [am slice] a mango.", 
+                "I am [make] a delicious breakfast.", 
+                "It is very healthy."
+            ], ["am slicing", "making"]),
+
+            bFixer("Farm Bugs", [
+                "Look at the field.", 
+                "The cow [are] eating grass.", 
+                "The dogs [is] running.",
+                "It is a beautiful day."
+            ], ["is", "are"]),
+
+            bBamboozle("Fact or Fiction", 
+                {text: "'I am walking' means I walk every day.", isTrue: false}, 
+                {text: "To make 'slice' continuous, we drop the 'e' -> slicing.", isTrue: true}
+            ),
+
+            bRoleplay("Picture Description", "Imagine a picture of a farm right now. Describe what everyone is doing.", "> Teacher: 'What is the cow doing? What are you doing?' | > You: 'The cow is eating. I am walking...'"),
+            
+            bRoleplay("Pantomime (Action!)", "Mime (act without speaking) an action like eating, drinking, or sleeping. Your teacher must guess!", "> Teacher: 'Are you eating?' | > You: 'Yes, I am! / No, I am not.'"),
+            
+            bWrap()
+        ];
+
+        // --- RUNTIME LOGIC ---
+        function toggleElementClass(id, action, className) {
+            const el = document.getElementById(id);
+            if (el) {
+                if (action === 'add') el.classList.add(className);
+                else if (action === 'remove') el.classList.remove(className);
+            }
+        }
+
+        function startMission() {
+            toggleElementClass('dashboard', 'add', 'hidden'); toggleElementClass('dashboard', 'remove', 'flex');
+            toggleElementClass('hud-top', 'remove', 'hidden'); toggleElementClass('hud-top', 'add', 'flex');
+            toggleElementClass('mission-arena', 'remove', 'hidden'); toggleElementClass('mission-arena', 'add', 'flex');
+            toggleElementClass('nav-console', 'remove', 'hidden'); toggleElementClass('nav-console', 'add', 'flex');
+            buildLessonNavigator(); renderStep();
+        }
+
+        function goHome() {
+            toggleElementClass('dashboard', 'remove', 'hidden'); toggleElementClass('dashboard', 'add', 'flex');
+            toggleElementClass('hud-top', 'add', 'hidden'); toggleElementClass('hud-top', 'remove', 'flex');
+            toggleElementClass('mission-arena', 'add', 'hidden'); toggleElementClass('mission-arena', 'remove', 'flex');
+            toggleElementClass('nav-console', 'add', 'hidden'); toggleElementClass('nav-console', 'remove', 'flex');
+            state.current = 0; updateHUD();
+            document.getElementById('lesson-navigator')?.classList.remove('active');
+            document.getElementById('teacher-hud')?.classList.remove('active');
+            document.getElementById('whiteboard')?.classList.remove('active');
+        }
+
+        function renderStep() {
+            if (!lessonData || !lessonData[state.current]) return;
+            const step = lessonData[state.current];
+            const sCount = document.getElementById('console-counter'); if(sCount) sCount.innerText = `PAGE ${String(state.current + 1).padStart(2, '0')}/${lessonData.length}`;
+            const content = document.getElementById('mission-content'); if(content) content.innerHTML = `<div class="w-full max-w-7xl mx-auto">${step.html}</div>`;
+            updateHUD();
+            
+            const navList = document.getElementById('nav-steps-list');
+            if (navList) {
+                Array.from(navList.children).forEach((btn, i) => {
+                    if(i === state.current) { btn.classList.add('bg-white', 'text-[var(--accent-sage)]', 'border-l-4', 'border-[var(--accent-sage)]', 'shadow-sm'); btn.classList.remove('text-gray-500'); } 
+                    else { btn.classList.remove('bg-white', 'text-[var(--accent-sage)]', 'border-l-4', 'border-[var(--accent-sage)]', 'shadow-sm'); btn.classList.add('text-gray-500'); }
+                });
+            }
+            if (step.type === TYPES.BUILDER) setTimeout(setupWb, 100);
+        }
+
+        function nextStep() { if (state.current < lessonData.length - 1) { state.current++; renderStep(); } else { goHome(); } }
+        function prevStep() { if (state.current > 0) { state.current--; renderStep(); } }
+        
+        // DRAWERS
+        function toggleLessonNavigator() { document.getElementById('lesson-navigator').classList.toggle('active'); document.getElementById('teacher-hud')?.classList.remove('active'); document.getElementById('whiteboard')?.classList.remove('active');}
+        function toggleTeacherHUD() { document.getElementById('teacher-hud').classList.toggle('active'); document.getElementById('lesson-navigator')?.classList.remove('active'); document.getElementById('whiteboard')?.classList.remove('active');}
+        function toggleWhiteboard() { document.getElementById('whiteboard').classList.toggle('active'); document.getElementById('lesson-navigator')?.classList.remove('active'); document.getElementById('teacher-hud')?.classList.remove('active');}
+
+        function toggleFullscreen() {
+            if (!document.fullscreenElement) { document.documentElement.requestFullscreen().catch(err => console.log(err)); } 
+            else { if (document.exitFullscreen) document.exitFullscreen(); }
+        }
+
+        function toggleStarter(btn) {
+            const content = btn.nextElementSibling;
+            if (content.classList.contains('open')) { content.classList.remove('open'); } else { content.classList.add('open'); }
+        }
+
+        // --- MINIGAMES ---
+
+        function handleQuizTrial(id, row, isCorrect, followup, starter) {
+            if(row.classList.contains('locked-check')) {
+                const parent = row.parentElement; 
+                Array.from(parent.children).forEach(child => { child.onclick = null; child.classList.add('opacity-40', 'cursor-default'); child.classList.remove('locked-check');});
+                row.classList.remove('opacity-40'); 
+                
+                if(isCorrect) {
+                    row.classList.add('correct'); state.xp += 3; updateHUD(); shootConfetti();
+                    const fBox = document.getElementById(`followup-box-${id}`); if(fBox && followup) fBox.classList.remove('hidden');
+                } else { row.classList.add('wrong'); state.hp -= 10; updateHUD(); }
+            }
+        }
+
+        function toggleTuner(id, checkbox, textAff, textAlt, feedback, tagColor) {
+            const textEl = document.getElementById(`tuner-text-${id}`);
+            const aff = document.getElementById(`mode-aff-${id}`);
+            const alt = document.getElementById(`mode-alt-${id}`);
+            textEl.style.opacity = 0;
+            setTimeout(() => {
+                if(checkbox.checked) {
+                    aff.classList.replace('text-[var(--text-main)]', 'text-gray-400'); alt.classList.replace('text-gray-400', 'text-[var(--text-main)]');
+                    textEl.innerHTML = textAlt.replace(/\[(.*?)\]/g, `<span style="color: ${tagColor}">$1</span>`); 
+                    document.getElementById(`tuner-fb-${id}`).classList.remove('hidden');
+                } else {
+                    aff.classList.replace('text-gray-400', 'text-[var(--text-main)]'); alt.classList.replace('text-[var(--text-main)]', 'text-gray-400');
+                    textEl.innerHTML = textAff.replace(/\[(.*?)\]/g, `<span style="color: ${tagColor}">$1</span>`); 
+                    document.getElementById(`tuner-fb-${id}`).classList.add('hidden');
+                }
+                textEl.style.opacity = 1;
+            }, 200);
+        }
+
+        let activeBug = null; let expectedFix = "";
+        function triggerFixer(el, answer) {
+            if(el.classList.contains('bug-fixed')) return;
+            activeBug = el; expectedFix = answer;
+            const panel = document.getElementById('fix-panel'); panel.classList.remove('translate-y-full');
+            document.getElementById('fix-input').value = ''; document.getElementById('fix-input').focus();
+        }
+        function submitFixer() {
+            const input = document.getElementById('fix-input').value.trim().toLowerCase();
+            const panel = document.getElementById('fix-panel');
+            if(input === expectedFix.toLowerCase()) {
+                activeBug.innerText = expectedFix; activeBug.classList.remove('bug-word'); activeBug.classList.add('bug-fixed');
+                panel.classList.add('translate-y-full');
+                const container = activeBug.closest('.nature-card');
+                const remaining = container.querySelectorAll('.bug-word').length;
+                if(remaining === 0) { shootConfetti(); state.xp += 5; updateHUD(); document.getElementById('fixer-hub').classList.remove('hidden');}
+            } else {
+                const inputEl = document.getElementById('fix-input'); inputEl.classList.add('shake', 'border-[var(--accent-terra)]');
+                state.hp -= 10; updateHUD();
+                setTimeout(() => inputEl.classList.remove('shake', 'border-[var(--accent-terra)]'), 400);
+            }
+        }
+        document.getElementById('fix-input')?.addEventListener('keypress', (e) => { if (e.key === 'Enter') submitFixer(); });
+
+        let wbState = {};
+        function setupWb() {
+            document.querySelectorAll('[id^="wb-data-"]').forEach(el => {
+                const id = el.id.replace('wb-data-', '');
+                const expectedData = el.getAttribute('data-expected');
+                wbState[id] = { current: [], expected: JSON.parse(expectedData) };
+            });
+        }
+        function moveWbWord(pill, word, id) {
+            if(pill.classList.contains('used')) return;
+            if(!wbState[id]) return;
+            wbState[id].current.push(word); pill.classList.add('used');
+            const dz = document.getElementById(`wb-dropzone-${id}`);
+            const newPill = document.createElement('span'); newPill.className = 'pill-in-zone'; newPill.innerText = word; dz.appendChild(newPill);
+            if(wbState[id].current.length === wbState[id].expected.length) {
+                let win = wbState[id].current.every((val, index) => val === wbState[id].expected[index]);
+                if(win) { document.getElementById(`wb-fb-${id}`).classList.remove('hidden'); updateHUD(); shootConfetti(); }
+                else { dz.classList.add('shake', 'border-[var(--accent-terra)]'); setTimeout(() => dz.classList.remove('shake', 'border-[var(--accent-terra)]'), 400); }
+            }
+        }
+        function resetWb(id) {
+            if(!wbState[id]) return;
+            wbState[id].current = []; document.getElementById(`wb-dropzone-${id}`).innerHTML = ''; document.getElementById(`wb-fb-${id}`).classList.add('hidden');
+            document.getElementById(`wb-bank-${id}`).querySelectorAll('.wb-pill').forEach(p => p.classList.remove('used'));
+        }
+
+        function checkBamb(q, isCorrect) {
+            const container = document.getElementById(`bamb-q${q}`);
+            if(isCorrect) {
+                container.classList.add('hidden');
+                if(q === 1) document.getElementById('bamb-q2').classList.remove('hidden');
+                else { document.getElementById('bamb-fb').classList.remove('hidden'); shootConfetti(); }
+            } else {
+                container.classList.add('shake', 'border-4', 'border-[var(--accent-terra)]');
+                setTimeout(() => container.classList.remove('shake', 'border-4', 'border-[var(--accent-terra)]'), 400);
+            }
+        }
+
+        function openEasyReader(boardId, readerIdx) {
+            document.querySelectorAll(`[id^="reader-content-${boardId}-"]`).forEach(el => el.classList.add('hidden'));
+            document.querySelectorAll(`[id^="reader-content-${boardId}-"]`).forEach(el => el.classList.remove('flex'));
+            const target = document.getElementById(`reader-content-${boardId}-${readerIdx}`);
+            target.classList.remove('hidden'); target.classList.add('flex');
+            target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+
+        function toggleConsultText(id) {
+            const el = document.getElementById(`consult-text-${id}`);
+            if (el.classList.contains('hidden')) { el.classList.remove('hidden'); el.classList.add('animate-in', 'fade-in'); } 
+            else { el.classList.add('hidden'); }
+        }
+
+        function shuffleArray(array) {
+            let curId = array.length;
+            while (0 !== curId) {
+                let randId = Math.floor(Math.random() * curId); curId -= 1;
+                let tmp = array[curId]; array[curId] = array[randId]; array[randId] = tmp;
+            }
+            return array;
+        }
+
+        function buildLessonNavigator() {
+            const list = document.getElementById('nav-steps-list'); if (!list) return;
+            list.innerHTML = '';
+            lessonData.forEach((step, i) => {
+                const btn = document.createElement('button');
+                btn.className = `w-full text-left p-3 rounded-2xl flex items-center gap-3 transition-all font-title text-sm ${i === state.current ? 'bg-white text-[var(--accent-sage)] font-bold border-l-4 border-[var(--accent-sage)] shadow-sm' : 'text-gray-500 hover:bg-white/50'}`;
+                btn.innerHTML = `<span class="w-6 opacity-50 font-bold">${i+1}</span><div class="flex flex-col truncate"><span class="truncate">${step.title}</span></div>`;
+                btn.onclick = () => { state.current = i; renderStep(); toggleLessonNavigator(); };
+                list.appendChild(btn);
+            });
+        }
+
+        function triggerPraise(main, sub) {
+            document.getElementById('teacher-hud')?.classList.remove('active'); 
+            const overlay = document.getElementById('praise-overlay'); const card = document.getElementById('praise-card');
+            
+            if(main === 'BEAUTIFUL') {
+                card.className = "nature-card p-16 rounded-[3rem] text-center transform scale-50 transition-transform duration-500 border-b-8 border-[var(--accent-sage)] shadow-2xl";
+                document.getElementById('praise-main').className = "font-title text-5xl md:text-7xl font-black tracking-tighter uppercase mb-4 text-[var(--accent-sage)] drop-shadow-sm";
+            } else {
+                card.className = "nature-card p-16 rounded-[3rem] text-center transform scale-50 transition-transform duration-500 border-b-8 border-[var(--accent-terra)] shadow-2xl";
+                document.getElementById('praise-main').className = "font-title text-5xl md:text-7xl font-black tracking-tighter uppercase mb-4 text-[var(--accent-terra)] drop-shadow-sm";
+            }
+            
+            document.getElementById('praise-main').innerText = main; document.getElementById('praise-sub').innerText = sub;
+            overlay.classList.remove('opacity-0', 'pointer-events-none');
+            setTimeout(() => card.classList.replace('scale-50', 'scale-100'), 50); shootConfetti();
+            setTimeout(() => { card.classList.replace('scale-100', 'scale-50'); overlay.classList.add('opacity-0', 'pointer-events-none'); }, 2500);
+        }
+
+        function shootConfetti() {
+            const cCanvas = document.getElementById('confetti-canvas'); const cCtx = cCanvas.getContext('2d');
+            cCanvas.width = window.innerWidth; cCanvas.height = window.innerHeight;
+            const pieces = []; const colors = ['#7C9082', '#C87A5D', '#EAB251', '#FFFFFF'];
+            for(let i=0; i<60; i++) pieces.push({ x: cCanvas.width/2, y: cCanvas.height/2+100, vx: (Math.random()-0.5)*20, vy: (Math.random()-1)*20-5, size: Math.random()*10+5, color: colors[Math.floor(Math.random()*colors.length)], rot: Math.random()*360, rotSpeed: (Math.random()-0.5)*10 });
+            let animationId;
+            function animateC() {
+                cCtx.clearRect(0, 0, cCanvas.width, cCanvas.height); let active = false;
+                pieces.forEach(p => {
+                    p.x += p.vx; p.y += p.vy; p.vy += 0.5; p.rot += p.rotSpeed; if(p.y < cCanvas.height) active = true;
+                    cCtx.save(); cCtx.translate(p.x, p.y); cCtx.rotate(p.rot*Math.PI/180); cCtx.fillStyle = p.color; 
+                    // Circular confetti (natural)
+                    cCtx.beginPath(); cCtx.arc(0, 0, p.size/2, 0, Math.PI*2); cCtx.fill(); cCtx.restore();
+                });
+                if(active) animationId = requestAnimationFrame(animateC); else cCtx.clearRect(0, 0, cCanvas.width, cCanvas.height);
+            }
+            animateC();
+        }
+        
+        window.onload = () => { updateHUD(); buildLessonNavigator(); goHome(); };
+    </script>
+</body>
+</html>
